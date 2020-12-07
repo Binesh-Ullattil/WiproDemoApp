@@ -1,7 +1,8 @@
-package com.binesh.wiprodemo
+package com.binesh.wiprodemo.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.binesh.wiprodemo.R
 
 class FeedsActivity : AppCompatActivity() {
 
