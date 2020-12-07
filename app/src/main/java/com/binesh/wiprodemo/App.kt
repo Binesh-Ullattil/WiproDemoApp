@@ -31,7 +31,6 @@ class App:Application(),HasAndroidInjector {
         NetworkStatusHelper.init(this)
     }
 
-
     override fun androidInjector(): AndroidInjector<Any> {
         return fragmentInjector
     }
