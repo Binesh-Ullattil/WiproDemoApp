@@ -14,6 +14,7 @@ class CountryFeedRepository(var apiService: ApiService) {
 
     fun loadFeeds(): MutableLiveData<ManageStateList<Row>>
     {
+
         val manageState: MutableLiveData<ManageStateList<Row>> = MutableLiveData()
 
         if(NetworkStatusHelper.isNetworkAvailable()){
