@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!--android:usesCleartextTraffic="true"-->
+    <!-- Using clear text traffic is not a recommended way due to security reasons.Enabled it to show images using glide in list which is loading from different external urls-->
+    <!-- can use network_security_config.xml instead-->
+
     <application
         android:name=".App"
         android:allowBackup="true"
