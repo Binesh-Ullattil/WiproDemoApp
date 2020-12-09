@@ -3,16 +3,12 @@ package com.binesh.wiprodemo.repository;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
-
 import com.binesh.wiprodemo.App;
 import com.binesh.wiprodemo.apis.ApiService;
 import com.binesh.wiprodemo.enums.ManageStateList;
 import com.binesh.wiprodemo.helper.NetworkStatusHelper;
 import com.binesh.wiprodemo.model.Row;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -42,19 +38,13 @@ import static org.powermock.api.mockito.PowerMockito.when;
         NetworkInfo.class,
         ConnectivityManager.class
 })
-@PowerMockListener(AnnotationEnabler.class)
+
+
 public class CountryFeedRepositoryTest {
 
-    /*@Rule
-    InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();*/
+    private CountryFeedRepository countryFeedRepository;
 
-    @Rule
-    public TestRule rule = new InstantTaskExecutorRule();
-    CountryFeedRepository countryFeedRepository;
 
-    /**
-     * Member variable to assign the
-     */
     @Mock
     Context mContext;
 
@@ -76,29 +66,10 @@ public class CountryFeedRepositoryTest {
         PowerMockito.mockStatic(NetworkStatusHelper.class);
         networkStatusHelper.init(app);
         when(app.getSystemService(Context.CONNECTIVITY_SERVICE)).thenReturn(connectivityManager);
-
         countryFeedRepository = new CountryFeedRepository(new ApiService(mContext));
     }
 
 
-    @Test
-    public void  testLiveData() {
-        MutableLiveData mutableLiveData = new MutableLiveData<String>();
-        mutableLiveData.postValue("test");
-        Assert.assertEquals("test", mutableLiveData.getValue());
-    }
-
-
-    @Test
-    public void testLoadFeeds() throws Exception {
-        MutableLiveData<ManageStateList<Row>> result = countryFeedRepository.loadFeeds();
-        Assert.assertEquals(null, result);
-    }
-
-    /**
-     * @brief Method to check the network availbilty
-     * and execute the if case
-     */
     @Test
     public void testLoadFeedsIfCase(){
         when(connectivityManager.getActiveNetworkInfo()).thenReturn(mNetworkInfo);
@@ -109,11 +80,11 @@ public class CountryFeedRepositoryTest {
 
     @Test
     public void testLoadFeedsElseCase(){
+        when(connectivityManager.getActiveNetworkInfo()).thenReturn(mNetworkInfo);
         when(networkStatusHelper.isNetworkAvailable()).thenReturn(false);
         MutableLiveData<ManageStateList<Row>> result = countryFeedRepository.loadFeeds();
 
     }
-
 
     @Test
     public void testGetApiService() throws Exception {
