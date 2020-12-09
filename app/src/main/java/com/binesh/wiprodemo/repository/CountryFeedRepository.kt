@@ -19,6 +19,7 @@ class CountryFeedRepository(var apiService: ApiService) {
 
         if(NetworkStatusHelper.isNetworkAvailable()){
 
+
             manageState.value= ManageStateList(ManageStatusEnum.LOADING)
             apiService.createService(APIs::class.java)
                 .countryFeed()
