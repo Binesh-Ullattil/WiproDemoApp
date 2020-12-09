@@ -44,7 +44,6 @@ public class CountryFeedRepositoryTest {
 
     private CountryFeedRepository countryFeedRepository;
 
-
     @Mock
     Context mContext;
 
