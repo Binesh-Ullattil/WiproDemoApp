@@ -74,6 +74,7 @@ class NetworkModule {
         return httpClient.build()
     }
 
+
     @Singleton
     @Provides
     fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {

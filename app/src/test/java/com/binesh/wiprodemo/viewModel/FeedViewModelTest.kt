@@ -6,9 +6,12 @@ import android.net.NetworkInfo
 import androidx.lifecycle.MutableLiveData
 import com.binesh.wiprodemo.App
 import com.binesh.wiprodemo.apis.ApiService
+import com.binesh.wiprodemo.helper.AppConstants
 import com.binesh.wiprodemo.helper.NetworkStatusHelper
 import com.binesh.wiprodemo.helper.ToastState
 import com.binesh.wiprodemo.repository.CountryFeedRepository
+import com.google.gson.GsonBuilder
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -21,6 +24,7 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore
 import org.powermock.core.classloader.annotations.PrepareForTest
 import org.powermock.modules.junit4.PowerMockRunner
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 @RunWith(PowerMockRunner::class)
 @PowerMockIgnore("javax.net.ssl.*")
@@ -50,8 +54,8 @@ class FeedViewModelTest {
     var mBagOfTags: Map<String, Any>? = null
     @InjectMocks
     var feedViewModel: FeedViewModel? = null
-    @Mock
-    var retrofit: Retrofit?=null
+
+    lateinit var retrofit: Retrofit
 
     @Before
     fun setUp() {
@@ -60,6 +64,11 @@ class FeedViewModelTest {
         networkStatusHelper!!.init(app!!)
         PowerMockito.`when`(app!!.getSystemService(Context.CONNECTIVITY_SERVICE))
             .thenReturn(connectivityManager)
+        retrofit=Retrofit.Builder()
+            .baseUrl(AppConstants.BASE_URL)
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+            .build()
     }
 
     @Test
@@ -80,7 +89,7 @@ class FeedViewModelTest {
     @Test
     @Throws(Exception::class)
     fun testSetRepository() {
-        feedViewModel!!.repository = CountryFeedRepository(ApiService(retrofit!!))
+        feedViewModel!!.repository = CountryFeedRepository(ApiService(retrofit))
     }
 
     @Test

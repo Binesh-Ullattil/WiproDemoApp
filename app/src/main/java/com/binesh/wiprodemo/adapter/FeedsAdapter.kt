@@ -1,3 +1,6 @@
+/**
+ * Class used to show the data in Recycler view
+ */
 package com.binesh.wiprodemo.adapter
 
 import android.view.LayoutInflater
