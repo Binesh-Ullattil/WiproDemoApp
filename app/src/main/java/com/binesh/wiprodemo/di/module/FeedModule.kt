@@ -1,3 +1,6 @@
+/**
+ * Dagger module for providing view model instance
+ */
 package com.binesh.wiprodemo.di.module
 
 import androidx.lifecycle.ViewModel
@@ -10,7 +13,6 @@ import dagger.multibindings.IntoMap
 
 @Module
 class FeedModule {
-
     @Provides
     @IntoMap
     @ViewModelKey(FeedViewModel::class)

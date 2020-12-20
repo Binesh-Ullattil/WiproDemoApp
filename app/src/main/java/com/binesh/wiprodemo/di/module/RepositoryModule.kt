@@ -1,3 +1,6 @@
+/**
+ * Dagger Module for providing repository instance
+ */
 package com.binesh.wiprodemo.di.module
 
 import com.binesh.wiprodemo.apis.ApiService

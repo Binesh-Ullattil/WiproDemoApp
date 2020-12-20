@@ -1,3 +1,6 @@
+/**
+ * Repository class for managing api call and providing response data
+ */
 package com.binesh.wiprodemo.repository
 
 import androidx.lifecycle.MutableLiveData
@@ -11,8 +14,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class CountryFeedRepository(var apiService: ApiService) {
-
-    //Repository class for managing api call and providing response
 
     fun loadFeeds(): MutableLiveData<ManageStateList<Row>> {
 

@@ -1,6 +1,3 @@
-/**
- * Fragment class used to display data.
- */
 package com.binesh.wiprodemo.base
 
 import android.os.Bundle

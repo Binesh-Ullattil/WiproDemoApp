@@ -1,3 +1,6 @@
+/**
+ * Dagger module for providing network related dependencies
+ */
 package com.binesh.wiprodemo.di.module
 
 import com.binesh.wiprodemo.App

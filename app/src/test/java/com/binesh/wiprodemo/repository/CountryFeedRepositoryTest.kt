@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
@@ -33,15 +34,21 @@ import retrofit2.converter.gson.GsonConverterFactory
     ConnectivityManager::class
 )
 class CountryFeedRepositoryTest {
+
     private var countryFeedRepository: CountryFeedRepository? = null
+
     @Mock
     var networkStatusHelper: NetworkStatusHelper? = null
+
     @Mock
     var app: App? = null
+
     @Mock
     var mNetworkInfo: NetworkInfo? = null
+
     @Mock
     var connectivityManager: ConnectivityManager? = null
+
     lateinit var retrofit:Retrofit
 
     @Before
@@ -49,6 +56,7 @@ class CountryFeedRepositoryTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         PowerMockito.mockStatic(NetworkStatusHelper::class.java)
+
         networkStatusHelper!!.init(app!!)
         PowerMockito.`when`(app!!.getSystemService(Context.CONNECTIVITY_SERVICE))
             .thenReturn(connectivityManager)
