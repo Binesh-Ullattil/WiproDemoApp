@@ -12,6 +12,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class CountryFeedRepository(var apiService: ApiService) {
 
+    //Repository class for managing api call and providing response
+
     fun loadFeeds(): MutableLiveData<ManageStateList<Row>>
     {
 

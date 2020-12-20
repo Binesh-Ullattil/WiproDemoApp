@@ -8,6 +8,8 @@ import com.binesh.wiprodemo.repository.CountryFeedRepository
 
 class FeedViewModel(var repository: CountryFeedRepository):BaseViewModel() {
 
+    //View model class for providing data to view
+
     fun getFeeds(): LiveData<ManageStateList<Row>> {
         return repository.loadFeeds()
     }
