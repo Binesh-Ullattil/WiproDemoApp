@@ -18,16 +18,7 @@ import javax.inject.Inject
 
 class ApiService @Inject constructor(var retrofit: Retrofit) {
 
-   /* companion object{
-        var retrofit: Retrofit?=null
-    }
-
-    init {
-        retrofit =
-    }*/
-
-
     fun <S> createService(serviceClass: Class<S>): S {
-        return retrofit?.create(serviceClass)!!
+        return retrofit.create(serviceClass)
     }
 }
