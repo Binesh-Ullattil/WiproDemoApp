@@ -10,12 +10,14 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.powermock.api.mockito.PowerMockito
 import org.powermock.core.classloader.annotations.PowerMockIgnore
 import org.powermock.core.classloader.annotations.PrepareForTest
 import org.powermock.modules.junit4.PowerMockRunner
+import retrofit2.Retrofit
 
 @RunWith(PowerMockRunner::class)
 @PowerMockIgnore("javax.net.ssl.*")
@@ -28,8 +30,10 @@ import org.powermock.modules.junit4.PowerMockRunner
 )
 class CountryFeedRepositoryTest {
     private var countryFeedRepository: CountryFeedRepository? = null
-    @Mock
-    var mContext: Context? = null
+    private var retrofit:Retrofit?=null
+
+    //@Mock
+    //var mContext: Context? = null
     @Mock
     var networkStatusHelper: NetworkStatusHelper? = null
     @Mock
@@ -38,6 +42,9 @@ class CountryFeedRepositoryTest {
     var mNetworkInfo: NetworkInfo? = null
     @Mock
     var connectivityManager: ConnectivityManager? = null
+    //@Mock
+    //var retrofit:Retrofit?=null
+
 
     @Before
     @Throws(Exception::class)
@@ -47,7 +54,10 @@ class CountryFeedRepositoryTest {
         networkStatusHelper!!.init(app!!)
         PowerMockito.`when`(app!!.getSystemService(Context.CONNECTIVITY_SERVICE))
             .thenReturn(connectivityManager)
-        countryFeedRepository = CountryFeedRepository(ApiService(mContext))
+        countryFeedRepository = CountryFeedRepository(ApiService(retrofit!!))
+
+        //countryFeedRepository = CountryFeedRepository(ApiService(mContext))
+
     }
 
     @Test
@@ -67,8 +77,7 @@ class CountryFeedRepositoryTest {
             .thenReturn(mNetworkInfo)
         PowerMockito.`when`(networkStatusHelper!!.isNetworkAvailable())
             .thenReturn(false)
-        val result =
-            countryFeedRepository!!.loadFeeds()
+        val result = countryFeedRepository!!.loadFeeds()
     }
 
     @Test
@@ -81,6 +90,8 @@ class CountryFeedRepositoryTest {
     @Test
     @Throws(Exception::class)
     fun testSetApiService() {
-        countryFeedRepository!!.apiService = ApiService(mContext)
+        countryFeedRepository!!.apiService = ApiService(retrofit!!)
+        //countryFeedRepository!!.apiService = ApiService(mContext)
+
     }
 }

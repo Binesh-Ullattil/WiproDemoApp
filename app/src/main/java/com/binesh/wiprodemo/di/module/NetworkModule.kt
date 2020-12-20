@@ -1,6 +1,5 @@
 package com.binesh.wiprodemo.di.module
 
-import android.content.Context
 import com.binesh.wiprodemo.App
 import com.binesh.wiprodemo.apis.ApiService
 import com.binesh.wiprodemo.helper.AppConstants
@@ -30,15 +29,21 @@ class NetworkModule {
         return GsonBuilder().setLenient().create()
     }
 
+    @Singleton
+    @Provides
+    fun provideHttpLoggingInterceptor():HttpLoggingInterceptor{
+
+        return HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+    }
 
     @Singleton
     @Provides
-    fun provideHttpClient(): OkHttpClient {
+    fun provideHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val cacheSize=(5*1024*1024).toLong()
         val myCache= App.app.cacheDir?.let { Cache(it,cacheSize) }
-        val loggingInterceptor= HttpLoggingInterceptor().apply {
-            level= HttpLoggingInterceptor.Level.BODY
-        }
 
         val REWRITE_CACHE_CONTROL_INTERCEPTOR: Interceptor =
             object : Interceptor {

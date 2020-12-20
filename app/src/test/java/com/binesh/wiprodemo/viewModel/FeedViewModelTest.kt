@@ -20,6 +20,7 @@ import org.powermock.api.mockito.PowerMockito
 import org.powermock.core.classloader.annotations.PowerMockIgnore
 import org.powermock.core.classloader.annotations.PrepareForTest
 import org.powermock.modules.junit4.PowerMockRunner
+import retrofit2.Retrofit
 
 @RunWith(PowerMockRunner::class)
 @PowerMockIgnore("javax.net.ssl.*")
@@ -49,6 +50,8 @@ class FeedViewModelTest {
     var mBagOfTags: Map<String, Any>? = null
     @InjectMocks
     var feedViewModel: FeedViewModel? = null
+    @Mock
+    var retrofit: Retrofit?=null
 
     @Before
     fun setUp() {
@@ -77,7 +80,7 @@ class FeedViewModelTest {
     @Test
     @Throws(Exception::class)
     fun testSetRepository() {
-        feedViewModel!!.repository = CountryFeedRepository(ApiService(null))
+        feedViewModel!!.repository = CountryFeedRepository(ApiService(retrofit!!))
     }
 
     @Test
