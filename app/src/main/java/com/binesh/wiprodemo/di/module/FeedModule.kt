@@ -17,5 +17,4 @@ class FeedModule {
     fun provideCountryFeedViewModel(repository: CountryFeedRepository): ViewModel {
         return FeedViewModel(repository)
     }
-
 }

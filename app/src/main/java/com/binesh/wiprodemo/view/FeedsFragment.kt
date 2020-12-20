@@ -42,38 +42,41 @@ class FeedsFragment : AppInjectBindFragment() {
 
         binding.refreshLayout.setOnRefreshListener {
             loadFeeds()
-            binding.refreshLayout.isRefreshing=false
+            binding.refreshLayout.isRefreshing = false
         }
     }
 
-    private fun loadFeeds(){
+    private fun loadFeeds() {
 
         viewModel.getFeeds().observe(viewLifecycleOwner, Observer {
 
             when (it.status) {
-                ManageStatusEnum.LOADING->{
-                    progressBar.visibility=View.VISIBLE
+                ManageStatusEnum.LOADING -> {
+                    progressBar.visibility = View.VISIBLE
                 }
 
-                ManageStatusEnum.LOADING_DISMISS->{
-                    progressBar.visibility=View.GONE
+                ManageStatusEnum.LOADING_DISMISS -> {
+                    progressBar.visibility = View.GONE
                 }
 
-                ManageStatusEnum.NO_DATA_FOUND->{
+                ManageStatusEnum.NO_DATA_FOUND -> {
                     ToastHelper.showToast(requireContext(), getString(R.string.no_data_found))
                 }
 
-                ManageStatusEnum.NO_INTERNET_CONNECTION->{
-                    ToastHelper.showToast(requireContext(), getString(R.string.no_internet_connection))
+                ManageStatusEnum.NO_INTERNET_CONNECTION -> {
+                    ToastHelper.showToast(
+                        requireContext(),
+                        getString(R.string.no_internet_connection)
+                    )
                 }
 
-                ManageStatusEnum.FAILED-> {
-                    progressBar.visibility=View.GONE
+                ManageStatusEnum.FAILED -> {
+                    progressBar.visibility = View.GONE
                     ToastHelper.showToast(requireContext(), getString(R.string.loading_failed))
                 }
 
-                ManageStatusEnum.SUCCESS-> {
-                    toolbar.tvToolbarTitle.text=it.title
+                ManageStatusEnum.SUCCESS -> {
+                    toolbar.tvToolbarTitle.text = it.title
                     (binding.rvFeeds.adapter as FeedsAdapter).addItems(
                         it.dataList ?: mutableListOf()
                     )
@@ -97,8 +100,8 @@ class FeedsFragment : AppInjectBindFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding= DataBindingUtil.inflate(inflater, R.layout.fragment_feeds, container, false)
-        binding.setVariable(BR.viewModel,viewModel)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_feeds, container, false)
+        binding.setVariable(BR.viewModel, viewModel)
         binding.executePendingBindings()
         return binding.root
     }

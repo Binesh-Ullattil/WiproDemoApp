@@ -31,19 +31,17 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpLoggingInterceptor():HttpLoggingInterceptor{
-
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
-
     }
 
     @Singleton
     @Provides
     fun provideHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        val cacheSize=(5*1024*1024).toLong()
-        val myCache= App.app.cacheDir?.let { Cache(it,cacheSize) }
+        val cacheSize = (5 * 1024 * 1024).toLong()
+        val myCache = App.app.cacheDir?.let { Cache(it, cacheSize) }
 
         val REWRITE_CACHE_CONTROL_INTERCEPTOR: Interceptor =
             object : Interceptor {
@@ -64,7 +62,7 @@ class NetworkModule {
                 }
             }
 
-        val httpClient= OkHttpClient.Builder()
+        val httpClient = OkHttpClient.Builder()
 
         httpClient.apply {
             addInterceptor(loggingInterceptor)
@@ -78,8 +76,8 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(gson: Gson,okHttpClient:OkHttpClient): Retrofit {
-      return   Retrofit.Builder()
+    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
             .baseUrl(AppConstants.BASE_URL)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))

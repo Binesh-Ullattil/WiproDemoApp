@@ -14,33 +14,35 @@ class CountryFeedRepository(var apiService: ApiService) {
 
     //Repository class for managing api call and providing response
 
-    fun loadFeeds(): MutableLiveData<ManageStateList<Row>>
-    {
+    fun loadFeeds(): MutableLiveData<ManageStateList<Row>> {
 
         val manageState: MutableLiveData<ManageStateList<Row>> = MutableLiveData()
 
-        if(NetworkStatusHelper.isNetworkAvailable()){
+        if (NetworkStatusHelper.isNetworkAvailable()) {
 
-
-            manageState.value= ManageStateList(ManageStatusEnum.LOADING)
+            manageState.value = ManageStateList(ManageStatusEnum.LOADING)
             apiService.createService(APIs::class.java)
                 .countryFeed()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({response->
-                    manageState.value= ManageStateList(ManageStatusEnum.LOADING_DISMISS)
+                .subscribe({ response ->
+                    manageState.value = ManageStateList(ManageStatusEnum.LOADING_DISMISS)
                     if (!response.rows.isNullOrEmpty()) {
-                        manageState.value = ManageStateList(status = ManageStatusEnum.SUCCESS,dataList = response.rows,title = response.title)
-                    }else{
-                        manageState.value= ManageStateList(status = ManageStatusEnum.NO_DATA_FOUND)
+                        manageState.value = ManageStateList(
+                            status = ManageStatusEnum.SUCCESS,
+                            dataList = response.rows,
+                            title = response.title
+                        )
+                    } else {
+                        manageState.value = ManageStateList(status = ManageStatusEnum.NO_DATA_FOUND)
                     }
 
                 }, {
-                    manageState.value= ManageStateList(status = ManageStatusEnum.FAILED)
+                    manageState.value = ManageStateList(status = ManageStatusEnum.FAILED)
                 })
 
-        }else{
-            manageState.value= ManageStateList(status = ManageStatusEnum.NO_INTERNET_CONNECTION)
+        } else {
+            manageState.value = ManageStateList(status = ManageStatusEnum.NO_INTERNET_CONNECTION)
         }
 
         return manageState

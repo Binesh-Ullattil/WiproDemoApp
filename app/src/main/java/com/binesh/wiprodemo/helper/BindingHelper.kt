@@ -8,7 +8,7 @@ import com.bumptech.glide.request.RequestOptions
 
 class BindingHelper {
 
-    companion object{
+    companion object {
 
         @JvmStatic
         @BindingAdapter("setFeedImage")
