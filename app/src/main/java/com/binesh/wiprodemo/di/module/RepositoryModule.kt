@@ -11,7 +11,7 @@ class RepositoryModule {
 
     @Singleton
     @Provides
-    internal fun provideMovieListRepository(
+    internal fun provideCountryFeedRepository(
         apiService: ApiService
     ): CountryFeedRepository {
         return CountryFeedRepository(apiService)
